@@ -1,0 +1,80 @@
+html
+Copy
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page</title>
+</head>
+<body>
+
+<h1>Quiz Time!</h1>
+
+<form id="quizForm">
+    <div>
+        <p>1. What is the capital of France?</p>
+        <label><input type="radio" name="question0" value="A"> A) Berlin</label><br>
+        <label><input type="radio" name="question0" value="B"> B) Madrid</label><br>
+        <label><input type="radio" name="question0" value="C"> C) Paris</label><br>
+        <label><input type="radio" name="question0" value="D"> D) Rome</label><br>
+    </div>
+    
+    <div>
+        <p>2. Which planet is known as the Red Planet?</p>
+        <label><input type="radio" name="question1" value="A"> A) Earth</label><br>
+        <label><input type="radio" name="question1" value="B"> B) Mars</label><br>
+        <label><input type="radio" name="question1" value="C"> C) Venus</label><br>
+        <label><input type="radio" name="question1" value="D"> D) Jupiter</label><br>
+    </div>
+
+    <div>
+        <p>3. Who wrote 'To Kill a Mockingbird'?</p>
+        <label><input type="radio" name="question2" value="A"> A) Harper Lee</label><br>
+        <label><input type="radio" name="question2" value="B"> B) J.K. Rowling</label><br>
+        <label><input type="radio" name="question2" value="C"> C) Ernest Hemingway</label><br>
+        <label><input type="radio" name="question2" value="D"> D) Mark Twain</label><br>
+    </div>
+
+    <div>
+        <p>4. What is the largest ocean on Earth?</p>
+        <label><input type="radio" name="question3" value="A"> A) Atlantic Ocean</label><br>
+        <label><input type="radio" name="question3" value="B"> B) Arctic Ocean</label><br>
+        <label><input type="radio" name="question3" value="C"> C) Indian Ocean</label><br>
+        <label><input type="radio" name="question3" value="D"> D) Pacific Ocean</label><br>
+    </div>
+
+    <button type="submit">Submit Quiz</button>
+</form>
+
+<script>
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const userAnswers = {};
+
+        // Collect user answers from the form
+        formData.forEach((value, key) => {
+            userAnswers[key] = value;
+        });
+
+        fetch('/submit-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userAnswers)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(`Your score: ${data.score}`);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+</body>
+</html>
