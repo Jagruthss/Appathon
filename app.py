@@ -1,4 +1,3 @@
-Copy
 from flask import Flask, request, render_template, redirect, url_for, jsonify, session
 import os
 
